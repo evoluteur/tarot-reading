@@ -703,3 +703,8 @@ html[data-theme="evol-blue"] .draw-btn.secondary:focus {
     min-width: 0;
   }
 }
+
+/* less empty space above the footer (the shared core.css puts 90vh there) */
+.big-v-space {
+  margin-top: 40px;
+}
