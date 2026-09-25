@@ -1,0 +1,31 @@
+{
+  "name": "tarot-reading",
+  "version": "1.0.0",
+  "description": "Draw a free online tarot reading: a ten-card Celtic Cross with the Rider-Waite-Smith deck. Click through the deck, let it deal for you, or enter the cards you drew.",
+  "repository": "github:evoluteur/tarot-reading",
+  "homepage": "https://evoluteur.github.io/tarot-reading/",
+  "copyright": "(c) 2026 Olivier Giulieri",
+  "author": "Olivier Giulieri (https://evoluteur.github.io/)",
+  "license": "MIT",
+  "keywords": [
+    "tarot",
+    "tarot-reading",
+    "tarot-cards",
+    "tarot-spread",
+    "celtic-cross",
+    "rider-waite-smith",
+    "rider-waite",
+    "major-arcana",
+    "minor-arcana",
+    "divination",
+    "oracle",
+    "fortune-telling",
+    "esoteric",
+    "esoterica",
+    "mystic",
+    "javascript"
+  ],
+  "scripts": {
+    "sync:themes": "sh scripts/sync-omg-themes.sh"
+  }
+}

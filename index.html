@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tarot Reading</title>
+    <meta
+      name="description"
+      content="Draw a free online tarot reading — a ten-card Celtic Cross with the Rider-Waite-Smith deck. Click through the deck, let it deal for you, or enter the cards you drew."
+    />
+    <meta name="author" content="Olivier Giulieri" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <meta name="theme-color" content="#1a212d" />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Overpass"
+    />
+    <link id="omg-core-css" rel="stylesheet" href="css/core.css" />
+    <link id="omg-theme-css" rel="stylesheet" href="css/themes/dark/dark.css" />
+    <link id="omg-density-css" rel="stylesheet" href="css/densities.css" />
+    <link rel="stylesheet" href="css/overrides.css" />
+    <link rel="stylesheet" href="css/tarot.css" />
+    <link rel="stylesheet" href="css/about.css" />
+
+    <script src="js/omg.js"></script>
+    <script src="js/tarot-data.js"></script>
+    <script src="js/tarot.js"></script>
+  </head>
+
+  <body onload="setupPage('home'); initTarot();" id="omg-body">
+    <div id="omg-header">
+      <h1>Tarot Reading</h1>
+      <div id="omg-theme-picker"></div>
+    </div>
+    <h2 id="spread-title"></h2>
+    <div class="content">
+      <p id="spread-tagline" class="tagline"></p>
+      <div id="draw-mode-picker" class="draw-mode-picker"></div>
+
+      <div id="interpret-bar" class="interpret-bar"></div>
+
+      <div id="deck-area" class="deck-area"></div>
+      <div id="entry-form" class="entry-form"></div>
+      <div id="card-grid" class="card-grid"></div>
+      <div id="interpretation-view" class="interpretation-view"></div>
+
+      <div class="big-v-space"></div>
+      <div class="footer">
+        <p><a href="about.html">About tarot</a></p>
+        <p>Card meanings adapted from Mark McElroy's <em>A Guide to Tarot Card Meanings</em>. Deck: Rider-Waite-Smith, illustrated by Pamela Colman Smith (1909).</p>
+        <p>
+          Tarot Reading is open source on
+          <a href="https://github.com/evoluteur/tarot-reading">GitHub</a>
+          with an MIT license.
+        </p>
+        <p>
+          Had fun browsing the app?
+          <a href="https://github.com/sponsors/evoluteur">Buy me a coffee by becoming a sponsor</a>.
+        </p>
+        <p>
+          You may also like <a href="https://evoluteur.github.io/i-ching-reading/">I Ching</a>, <a href="https://evoluteur.github.io/rune-reading/">Runes</a>, and <a href="https://evoluteur.github.io/motivational-numerology/">Motivational Numerology</a>. For more mystic arts as small web apps, see
+          <a href="https://evoluteur.github.io/projects/esoterica.html">Esoterica</a>.
+        </p>
+        <p class="copyright">
+          &#169; 2026
+          <a href="https://evoluteur.github.io/">Olivier Giulieri</a>
+        </p>
+      </div>
+    </div>
+
+    <div id="detail-overlay" class="detail-overlay"></div>
+    <aside id="card-detail" class="card-detail pane"></aside>
+  </body>
+</html>

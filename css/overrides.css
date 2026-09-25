@@ -1,0 +1,21 @@
+/*
+  tarot-reading customizations on top of the shared omg-themes styles.
+  core.css, densities.css, the themes and omg.js are synced from omg-themes
+  (npm run sync:themes), so don't edit them here: add overrides below.
+  Per-theme rules use html[data-theme="..."] (set by setTheme in omg.js).
+*/
+
+/* sticky header row for .omg-table */
+.omg-table th {
+  position: sticky;
+  top: 100px;
+  z-index: 50;
+}
+
+/* card detail side panel (light and blue themes need their own background) */
+:where(html[data-theme="light"]) .card-detail {
+  background-color: #fbfbfb;
+}
+:where(html[data-theme="evol-blue"]) .card-detail {
+  background: #0288d1 url("themes/evol-blue/spirals.png");
+}
