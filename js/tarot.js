@@ -134,24 +134,52 @@ const pickOne = (arr) => arr[Math.floor(Math.random() * arr.length)];
 let drawMode = "click"; // "click" | "auto" | "enter"
 let autoDrawTimer = null;
 
+// "click": cards drawn one at a time (the Draw button or a click on the
+// deck); "auto": Draw All is dealing them on a timer; "enter": the form.
 const DRAW_MODES = [
-  { id: "click", label: "Draw by Click" },
-  { id: "auto", label: "Draw for Me" },
+  { id: "click", label: "Draw a Card" },
+  { id: "auto", label: "Draw All" },
   { id: "enter", label: "Enter Drawing" },
 ];
 
+// Same pattern as Rune Reading: "Draw a Card" (then "Draw Next Card") and
+// an outline "Draw All", plus "Enter Drawing" before the first card.
 const renderDrawModePicker = () => {
   const elem = document.getElementById("draw-mode-picker");
   if (!elem) return;
-  // Once every card is drawn the choice of draw mode is moot, so the row
-  // stays hidden until "New Reading" starts over (placedCount back to 0).
+  // Once every card is drawn the buttons are moot, so the row stays hidden
+  // until "New Reading" starts over (placedCount back to 0).
   const drawn = activeCards.length > 0 && placedCount >= activeCards.length;
   elem.style.display = drawn ? "none" : "";
   if (drawn) return;
-  elem.innerHTML = DRAW_MODES.map(
-    (m) =>
-      `<button type="button" class="${m.id === drawMode ? "active" : ""}" data-mode="${m.id}" onclick="startReading('${m.id}')">${m.label}</button>`,
-  ).join("");
+  const dealing = autoDrawTimer ? " disabled" : "";
+  const entering = drawMode === "enter";
+  const next = entering ? 0 : placedCount;
+  const remaining = activeCards.length - next;
+  elem.innerHTML = `
+    <button type="button" class="draw-btn" onclick="drawCardClick()"${dealing}>${next === 0 ? "Draw a Card" : "Draw Next Card"}</button>
+    ${remaining > 1 ? `<button type="button" class="draw-btn secondary" onclick="drawAllClick()"${dealing}>Draw All</button>` : ""}
+    ${next === 0 && !entering ? `<button type="button" class="draw-btn secondary" onclick="startReading('enter')"${dealing}>Enter Drawing</button>` : ""}`;
+};
+
+// Draws the next card from the deck, as a click on the deck would.
+const drawCardClick = () => {
+  if (autoDrawTimer) return;
+  if (drawMode === "enter") startReading("click");
+  else drawMode = "click";
+  const deckCards = document.querySelectorAll(".deck-card");
+  if (!deckCards.length) return;
+  drawNextCard(deckCards[Math.floor(Math.random() * deckCards.length)]);
+};
+
+// Deals every remaining card, one after the other.
+const drawAllClick = () => {
+  if (autoDrawTimer) return;
+  if (drawMode === "enter") return startReading("auto");
+  drawMode = "auto";
+  startAutoDraw();
+  renderDrawModePicker();
+  saveReadingState();
 };
 
 const stopAutoDraw = () => {
@@ -957,8 +985,10 @@ const revealAll = () => {
 // used (for "Enter Drawing" that also means an empty form, not the old
 // draft).
 const newReading = () => {
-  if (drawMode === "enter") clearEntryDraft();
-  startReading(drawMode);
+  if (drawMode === "enter") {
+    clearEntryDraft();
+    startReading("enter");
+  } else startReading("click");
 };
 
 const interpretCardTile = (i) => {

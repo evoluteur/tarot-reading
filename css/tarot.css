@@ -7,19 +7,44 @@
   margin: 0 0 20px;
 }
 
+/* Draw a Card / Draw All / Enter Drawing: same pattern as Rune Reading */
 .draw-mode-picker {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 4px;
   margin: 10px 0 5px;
 }
-.draw-mode-picker button {
-  margin: 0;
-  opacity: 0.75;
+.draw-btn {
+  margin: 8px 5px 0 0;
 }
-.draw-mode-picker button.active {
-  opacity: 1;
-  box-shadow: 0 0 0 2px currentColor;
+.draw-btn.secondary {
+  background-color: transparent;
+  border: 2px solid #3182ce;
+}
+.draw-btn.secondary:hover,
+.draw-btn.secondary:focus {
+  background-color: #2b6cb0;
+}
+.draw-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+/* light theme: the theme's buttons have white text, which vanishes on the transparent outline button */
+html[data-theme="light"] .draw-btn.secondary {
+  color: #2b6cb0;
+}
+html[data-theme="light"] .draw-btn.secondary:hover,
+html[data-theme="light"] .draw-btn.secondary:focus {
+  color: white;
+}
+/* blue theme: the outline button must stand out on the blue background */
+html[data-theme="evol-blue"] .draw-btn.secondary {
+  color: white;
+  border-color: white;
+}
+html[data-theme="evol-blue"] .draw-btn.secondary:hover,
+html[data-theme="evol-blue"] .draw-btn.secondary:focus {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .entry-form {
