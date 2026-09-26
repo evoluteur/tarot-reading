@@ -179,7 +179,6 @@ const drawAllClick = () => {
   drawMode = "auto";
   startAutoDraw();
   renderDrawModePicker();
-  saveReadingState();
 };
 
 const stopAutoDraw = () => {
@@ -205,118 +204,6 @@ const startAutoDraw = () => {
     const deckCard = deckCards[Math.floor(Math.random() * deckCards.length)];
     drawNextCard(deckCard);
   }, 500);
-};
-
-// The current reading (which cards landed where, how far dealt/revealed,
-// and which draw mode was in play) is mirrored to localStorage on every
-// change, so reloading the page picks the same reading back up instead of
-// starting a fresh random one.
-const READING_STORAGE_KEY = "tarot-active-reading";
-
-const saveReadingState = () => {
-  if (!activeCards.length || (drawMode === "enter" && placedCount === 0)) {
-    localStorage.removeItem(READING_STORAGE_KEY);
-    return;
-  }
-  const data = {
-    spreadKey: currentSpreadKey,
-    drawMode,
-    placedCount,
-    revealedCount,
-    cards: activeCards.map(({ card, position }) => ({
-      suit: card.suit,
-      rank: card.rank,
-      position,
-    })),
-  };
-  try {
-    localStorage.setItem(READING_STORAGE_KEY, JSON.stringify(data));
-  } catch {
-    // storage full/unavailable -- not worth failing the reading over
-  }
-};
-
-const restoreReadingState = () => {
-  let raw;
-  try {
-    raw = JSON.parse(localStorage.getItem(READING_STORAGE_KEY) || "null");
-  } catch {
-    raw = null;
-  }
-  const positions = SPREADS.celtic.positions;
-  if (
-    !raw ||
-    raw.spreadKey !== "celtic" ||
-    !Array.isArray(raw.cards) ||
-    raw.cards.length !== positions.length
-  ) {
-    return false;
-  }
-
-  const cards = raw.cards.map((c) =>
-    tarotCardsData.find(
-      (tc) => tc.suit === c.suit && String(tc.rank) === String(c.rank),
-    ),
-  );
-  if (cards.some((c) => !c)) return false;
-
-  currentSpreadKey = "celtic";
-  drawMode = DRAW_MODES.some((m) => m.id === raw.drawMode)
-    ? raw.drawMode
-    : "click";
-  activeCards = positions.map((position, i) => ({ card: cards[i], position }));
-  deck = cards.slice();
-  activeIndex = -1;
-  placedCount = Math.min(
-    Math.max(Number(raw.placedCount) || 0, 0),
-    activeCards.length,
-  );
-  revealedCount = Math.min(
-    Math.max(Number(raw.revealedCount) || 0, 0),
-    placedCount,
-  );
-  interpretMode = false;
-
-  const spread = SPREADS.celtic;
-  const title = document.getElementById("spread-title");
-  if (title) title.textContent = spread.label;
-  const tagline = document.getElementById("spread-tagline");
-  if (tagline) tagline.textContent = spread.tagline;
-
-  document.getElementById("card-grid")?.classList.remove("hidden");
-  document.getElementById("interpretation-view")?.classList.remove("open");
-  document.getElementById("entry-form")?.classList.remove("open");
-
-  renderSpread();
-  for (let i = 0; i < placedCount; i++) {
-    const slot = document.querySelector(`#card-grid [data-slot="${i}"]`);
-    if (slot) slot.outerHTML = cardMarkup(i);
-    if (i < revealedCount) {
-      document
-        .querySelector(
-          `#card-grid .tarot-card[data-index="${i}"] .card-flip-inner`,
-        )
-        ?.classList.add("flipped");
-    }
-  }
-  renderInterpretBar();
-  closeDetail();
-  updateNextHighlight();
-  renderDrawModePicker();
-
-  if (drawMode === "enter") {
-    const area = document.getElementById("deck-area");
-    if (area) {
-      area.innerHTML = "";
-      area.style.display = "none";
-    }
-  } else {
-    renderDeckBand();
-    if (drawMode === "auto" && placedCount < activeCards.length)
-      startAutoDraw();
-  }
-  scheduleAlign(document.querySelector("#card-grid .tarot-card.crossing"));
-  return true;
 };
 
 const startReading = (mode) => {
@@ -362,7 +249,6 @@ const startReading = (mode) => {
     renderDeckBand();
     if (mode === "auto") startAutoDraw();
   }
-  saveReadingState();
 };
 
 // -- "Enter Drawing": a 10-row form (one per position) with an Arcana
@@ -629,7 +515,6 @@ const maybeFinalizeEntry = () => {
   renderDrawModePicker();
   updateNextHighlight();
   scheduleAlign(document.querySelector("#card-grid .tarot-card.crossing"));
-  saveReadingState();
   clearEntryDraft();
 
   document.getElementById("entry-form")?.classList.remove("open");
@@ -809,7 +694,6 @@ const drawNextCard = (el) => {
   placedCount++;
   renderDeckBand();
   renderDrawModePicker();
-  saveReadingState(); // capture placedCount right away, not just once the flight animation ends
 
   const { card } = activeCards[idx];
   const name = titleCase(card.name);
@@ -847,7 +731,6 @@ const drawNextCard = (el) => {
     scheduleAlign(
       document.querySelector(`#card-grid .tarot-card[data-index="${idx}"]`),
     );
-    saveReadingState();
   };
   flyer.addEventListener("transitionend", function onEnd(e) {
     if (e.propertyName !== "left") return;
@@ -968,7 +851,6 @@ const revealAll = () => {
         )
         ?.classList.add("flipped");
       updateNextHighlight();
-      saveReadingState();
     }
     if (revealedCount >= activeCards.length) {
       stopReveal();
@@ -1238,7 +1120,6 @@ const selectCard = (i) => {
   openDetail();
   renderInterpretBar();
   updateNextHighlight();
-  saveReadingState();
 };
 
 document.addEventListener("keydown", (e) => {
@@ -1264,15 +1145,11 @@ document.addEventListener("click", (e) => {
 
 window.addEventListener("resize", () => alignCrossingCard());
 
+// Every visit starts fresh: an empty Celtic Cross with the deck ready to draw from.
 const initTarot = () => {
+  try {
+    localStorage.removeItem("tarot-active-reading"); // readings saved by earlier versions
+  } catch {}
   renderDrawModePicker();
-  if (restoreReadingState()) return;
-
-  const draft = loadEntryDraft();
-  if (draft && draft.some((row) => row.value)) {
-    startReading("enter");
-    return;
-  }
-
   startReading("click");
 };

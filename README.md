@@ -46,16 +46,16 @@ The card meanings are adapted from Mark McElroy's [A Guide to Tarot Card Meaning
 
 ## How it is built
 
-The pages are plain HTML, CSS and JavaScript, with no dependencies and no build step. Just open `index.html`.
+The app itself is plain HTML, CSS and JavaScript, with no dependencies and no build step. Just open `index.html`. (The only build step is the optional one above that regenerates the static card pages.)
 
 - The card data (names, suits, ranks, keywords, meanings and fortune-telling lines) is in [js/tarot-data.js](https://github.com/evoluteur/tarot-reading/blob/main/js/tarot-data.js), and the app logic in [js/tarot.js](https://github.com/evoluteur/tarot-reading/blob/main/js/tarot.js).
 - Three color themes (dark, light and blue) are shared with my other projects.
-- The reading in progress, including how many cards have been dealt and turned, is kept in the browser's local storage, so reloading the page picks up where you left off.
+- Each visit starts a fresh reading: an empty Celtic Cross with the deck ready to draw from.
 
 Tarot-Reading is open source at [GitHub](https://github.com/evoluteur/tarot-reading) with MIT license.
 
 Had fun browsing the app? [Buy me a coffee by becoming a sponsor](https://github.com/sponsors/evoluteur).
 
-You may also be interested in my other divination projects [I-Ching-Reading](https://github.com/evoluteur/i-ching-reading) ([demo](https://evoluteur.github.io/i-ching-reading/)), [Rune-Reading](https://github.com/evoluteur/rune-reading) ([demo](https://evoluteur.github.io/rune-reading/)) and [Motivational-Numerology](https://github.com/evoluteur/motivational-numerology) ([demo](https://evoluteur.github.io/motivational-numerology/)). For more mystic arts as small web apps, see [Esoterica](https://evoluteur.github.io/projects/esoterica.html).
+You may also be interested in my other divination projects [I-Ching-Reading](https://github.com/evoluteur/i-ching-reading) ([demo](https://evoluteur.github.io/i-ching-reading/)), [Rune-Reading](https://github.com/evoluteur/rune-reading) ([demo](https://evoluteur.github.io/rune-reading/)) and [Motivational-Numerology](https://github.com/evoluteur/motivational-numerology) ([demo](https://evoluteur.github.io/motivational-numerology/)). For more mystic arts as small web apps, see [Esoterica](https://evoluteur.github.io/esoterica.html).
 
 Copyright (c) 2026 [Olivier Giulieri](https://evoluteur.github.io/).

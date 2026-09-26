@@ -1,4 +1,11 @@
 const themes = ["dark", "light", "evol-blue"];
+
+// Projects that link to the hosted themes (instead of keeping synced copies)
+// set these before loading this script:
+//   window.OMG_THEMES_BASE = "https://evoluteur.github.io/omg-themes/";
+//   window.OMG_DEFAULT_THEME = "evol-blue";  // optional, defaults to "dark"
+const themeBase = () => window.OMG_THEMES_BASE || "";
+const defaultTheme = () => window.OMG_DEFAULT_THEME || "dark";
 const themesColors = {
   "evol-blue": "#0288d1",
   dark: "#1a212d",
@@ -31,7 +38,7 @@ const setupPage = (id) => {
       elem.innerHTML = h;
     }
   }
-  const theme = localStorage.getItem("omg-theme") || "dark";
+  const theme = localStorage.getItem("omg-theme") || defaultTheme();
   const density = localStorage.getItem("omg-density") || "medium";
   setTheme(theme);
   renderThemePicker(theme);
@@ -71,10 +78,17 @@ const setTheme = (id) => {
   }
   let elem = document.getElementById("omg-theme-css");
   if (elem) {
-    elem.setAttribute("href", `css/themes/${id}/${id}.css`);
+    const href = `${themeBase()}css/themes/${id}/${id}.css`;
+    if (elem.getAttribute("href") !== href) {
+      elem.setAttribute("href", href);
+    }
     localStorage.setItem("omg-theme", id);
     // lets page css target a theme: html[data-theme="evol-blue"] ...
     document.documentElement.setAttribute("data-theme", id);
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta && themesColors[id]) {
+      meta.setAttribute("content", themesColors[id]);
+    }
   }
 };
 

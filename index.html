@@ -2,6 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-063933E3C2"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-063933E3C2");
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tarot Reading</title>
     <meta
@@ -28,7 +40,13 @@
     <script src="js/tarot.js"></script>
   </head>
 
-  <body onload="setupPage('home'); initTarot();" id="omg-body">
+  <body
+    onload="
+      setupPage('home');
+      initTarot();
+    "
+    id="omg-body"
+  >
     <div id="omg-header">
       <h1>Tarot Reading</h1>
       <div id="omg-theme-picker"></div>
@@ -47,8 +65,14 @@
 
       <div class="big-v-space"></div>
       <div class="footer">
-        <p><a href="about.html">About tarot</a></p>
-        <p>Card meanings adapted from Mark McElroy's <em>A Guide to Tarot Card Meanings</em>. Deck: Rider-Waite-Smith, illustrated by Pamela Colman Smith (1909).</p>
+        <p>
+          <a href="about.html">About tarot</a>
+        </p>
+        <p>
+          Card meanings adapted from Mark McElroy's
+          <em>A Guide to Tarot Card Meanings</em>. Deck: Rider-Waite-Smith,
+          illustrated by Pamela Colman Smith (1909).
+        </p>
         <p>
           Tarot Reading is open source on
           <a href="https://github.com/evoluteur/tarot-reading">GitHub</a>
@@ -56,11 +80,18 @@
         </p>
         <p>
           Had fun browsing the app?
-          <a href="https://github.com/sponsors/evoluteur">Buy me a coffee by becoming a sponsor</a>.
+          <a href="https://github.com/sponsors/evoluteur"
+            >Buy me a coffee by becoming a sponsor</a
+          >.
         </p>
         <p>
-          You may also like <a href="https://evoluteur.github.io/i-ching-reading/">I Ching</a>, <a href="https://evoluteur.github.io/rune-reading/">Runes</a>, and <a href="https://evoluteur.github.io/motivational-numerology/">Motivational Numerology</a>. For more mystic arts as small web apps, see
-          <a href="https://evoluteur.github.io/projects/esoterica.html">Esoterica</a>.
+          You may also like
+          <a href="https://evoluteur.github.io/i-ching-reading/">I Ching</a>,
+          <a href="https://evoluteur.github.io/rune-reading/">Runes</a>, and
+          <a href="https://evoluteur.github.io/motivational-numerology/"
+            >Motivational Numerology</a
+          >. For more mystic arts as small web apps, see
+          <a href="https://evoluteur.github.io/esoterica.html">Esoterica</a>.
         </p>
         <p class="copyright">
           &#169; 2026
