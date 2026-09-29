@@ -26,6 +26,7 @@
     "javascript"
   ],
   "scripts": {
+    "build": "node scripts/build-card-pages.js",
     "sync:themes": "sh scripts/sync-omg-themes.sh"
   }
 }

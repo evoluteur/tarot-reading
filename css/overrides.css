@@ -19,3 +19,31 @@
 :where(html[data-theme="evol-blue"]) .card-detail {
   background: #0288d1 url("themes/evol-blue/spirals.png");
 }
+
+/* GitHub link, just below the theme toggle */
+#omg-github {
+  position: absolute;
+  top: 34px;
+  right: 4px; /* centred under the last toggle icon */
+  margin-top: 12px;
+  z-index: 200;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: none;
+  opacity: 0.75;
+}
+#omg-github svg {
+  width: 30px; /* same size in every theme (the themes' generic svg rule differs) */
+  height: 30px;
+}
+html[data-theme="evol-blue"] #omg-github svg {
+  fill: white; /* like the theme toggle icons on the blue background */
+}
+#omg-github:hover,
+#omg-github:focus-visible {
+  opacity: 1;
+}

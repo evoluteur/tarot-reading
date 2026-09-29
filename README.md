@@ -3,6 +3,7 @@
 Draw a Celtic Cross tarot reading with the Rider-Waite-Smith deck, right in your browser. Turn the cards one by one, read what each one says about its place in the spread, then see the whole reading grouped by theme. No sign-up and no libraries.
 
 - [Draw a tarot reading](https://evoluteur.github.io/tarot-reading/)
+- [The 78 tarot cards](https://evoluteur.github.io/tarot-reading/tarot-cards/): one page per card, with its upright and shadow meanings
 
 ![Tarot Reading](tarot-reading.png)
 
@@ -43,6 +44,16 @@ The ten positions, in the order they are dealt:
 All 78 cards of the Rider-Waite-Smith deck are included: the 22 Major Arcana and the four suits of the Minor Arcana (Wands, Cups, Swords and Pentacles, ten numbered cards and four court cards each). The card images are from the deck illustrated by Pamela Colman Smith in 1909 (published by Rider & Co., public domain), via [Wikipedia](https://en.wikipedia.org/wiki/Rider%E2%80%93Waite_Tarot).
 
 The card meanings are adapted from Mark McElroy's [A Guide to Tarot Card Meanings](http://www.madebymark.com/a-guide-to-tarot-card-meanings/). A reading is a mirror for your own judgment, not a verdict.
+
+## Card pages
+
+Every card also has its own static page (`tarot-cards/the-fool.html` ... `tarot-cards/king-of-coins.html`), plus a page listing all 78 (`tarot-cards/index.html`), so each card can be found, shared and indexed on its own. They are generated from the same data as the app:
+
+```
+npm run build
+```
+
+This runs [scripts/build-card-pages.js](https://github.com/evoluteur/tarot-reading/blob/main/scripts/build-card-pages.js), which reads [js/tarot-data.js](https://github.com/evoluteur/tarot-reading/blob/main/js/tarot-data.js) (and the image names in js/tarot.js), and rewrites the pages, `sitemap.xml` and `robots.txt`. It only needs Node. Re-run it after editing the data and commit the result.
 
 ## How it is built
 
