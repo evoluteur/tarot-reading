@@ -273,7 +273,7 @@ ${JSON.stringify(jsonld, null, 2)}
 `;
 
 const header = () => `
-  <body onload="setupPage('card');" id="omg-body">
+  <body onload="setupPage('card');" id="omg-body" class="medium">
     <div id="omg-header">
       <h1><a href="../index.html">Tarot Reading</a></h1>
       <div id="omg-theme-picker"></div>
